@@ -8,6 +8,8 @@ package com.example.letai.services;
  *    Xin cảm ơn!
  *******************************************************/
 
+import com.example.letai.dto.UserDTO;
+import com.example.letai.dto.converter.UserConverter;
 import com.example.letai.entity.UserEntity;
 import com.example.letai.repository.UserRepository;
 import com.example.letai.authenticate.config.user.CustomUserDetails;
@@ -15,6 +17,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -32,6 +36,12 @@ public class UserService implements UserDetailsService {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private UserConverter userConverter;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     @Override
     public UserDetails loadUserByUsername(String username) {
@@ -52,6 +62,21 @@ public class UserService implements UserDetailsService {
 
         return new CustomUserDetails(user);
     }
-
-
+    public UserDTO save(UserDTO userDTO) {
+        try {
+            UserEntity userEntity;
+            userDTO.setPassword(passwordEncoder.encode(userDTO.getPassword()));
+            userEntity = userConverter.toEntity(userDTO);
+            UserEntity users = userRepository.save(userEntity);
+            if(users != null &&users.getId()!=0){
+                return userDTO;
+            }else{
+                return null;
+            }
+        }
+        catch(Exception e) {
+            System.out.println(e);
+            return null;
+        }
+    }
 }

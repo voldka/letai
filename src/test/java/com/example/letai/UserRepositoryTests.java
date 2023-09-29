@@ -27,8 +27,9 @@ public class UserRepositoryTests {
     @Test
     public void testAddUser(){
         UserEntity user = new UserEntity();
+        user.setFullName("tran gian khang");
         user.setAddress("lo1,ham nghi");
-        user.setEmail("tailx2301@gmai.com");
+        user.setEmail("tailx0913@gmai.com");
         user.setPassword("matkhau");
         UserEntity savedUser = userRepository.save(user);
 
@@ -45,7 +46,7 @@ public class UserRepositoryTests {
     }
     @Test
     public void testUpdate(){
-        long userId =1;
+        long userId =5;
         Optional<UserEntity>  optionalUserEntity = userRepository.findById(userId);
         UserEntity user = optionalUserEntity.get();
         user.setFullName("nguyen quoc cuong");
@@ -56,14 +57,14 @@ public class UserRepositoryTests {
     }
     @Test
     public void testGet(){
-        long userId=2;
+        long userId=5;
         Optional<UserEntity>  optionalUserEntity = userRepository.findById(userId);
         Assertions.assertThat(optionalUserEntity).isPresent();
         System.out.println(optionalUserEntity.get().toString());
     }
     @Test
-    public void testDeleta(){
-        long userId=2;
+    public void testDelete(){
+        long userId=7;
         userRepository.deleteById(userId);
 
         Optional<UserEntity> optionalUserEntity = userRepository.findById(userId);

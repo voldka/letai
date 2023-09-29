@@ -39,11 +39,11 @@ public class OrderItemEntity {
     private Long price;
     private Long discount;
 
-    @ManyToOne
-    @JoinColumn(name = "order_id", referencedColumnName = "id")
-    private OrderEntity order;
-
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "product_id", referencedColumnName = "id")
-    private ProductEntity product;
+//    @ManyToOne
+//    @JoinColumn(name = "orderid", referencedColumnName = "id")
+//    private OrderEntity order;
+//
+//    @OneToOne(cascade = CascadeType.ALL)
+//    @JoinColumn(name = "productid", referencedColumnName = "id")
+//    private ProductEntity product;
 }

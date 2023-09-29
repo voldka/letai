@@ -31,12 +31,12 @@ public class OrderEntity {
         return id;
     }
 
-    @OneToMany(mappedBy = "order",targetEntity=OrderItemEntity.class,orphanRemoval = true, cascade = {CascadeType.ALL}, fetch = FetchType.LAZY)
-    private List<OrderItemEntity> OrderItems = new ArrayList<>();
-
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "shipping_address_id", referencedColumnName = "id")
-    private ShippingAddressEntity shippingAddress;
+//    @OneToMany(mappedBy = "order")
+//    private List<OrderItemEntity> OrderItems = new ArrayList<>();
+//
+//    @OneToOne(cascade = CascadeType.ALL)
+//    @JoinColumn(name = "shippingaddressid", referencedColumnName = "id")
+//    private ShippingAddressEntity shippingAddress;
 }
 
 

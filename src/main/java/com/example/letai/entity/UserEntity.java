@@ -28,23 +28,19 @@ public class UserEntity {
     @Id
     @Column(name = "id", nullable = false)
     private Long id;
-
     @Column(name = "email" , nullable = false)
     private String email;
     @Column(name = "password",nullable = false, length = 45)
     private String password;
     @Column(name = "fullname",nullable = false, length = 45)
     private String fullName;
-
-
+    @Column(name = "address", nullable = true)
+    private String address ="chưa cập nhật";
     @Enumerated(EnumType.STRING)
-    private AppUserRole appUserRole;
-
+    private AppUserRole appUserRole = AppUserRole.USER;
     private String phone;
     private String avatar;
     private String city;
-    private String address;
-
     private Boolean locked = false;
     private Boolean enabled = false;
 
@@ -52,19 +48,15 @@ public class UserEntity {
         this.id = id;
         this.email = email;
         this.password = password;
+
         this.fullName = fullName;
         this.appUserRole = appUserRole;
         this.phone = phone;
+
         this.avatar = avatar;
         this.city = city;
         this.address = address;
     }
-
-    public UserEntity(int i, String s, String s1, String s2, String s3, AppUserRole appUserRole, String s4, String s5) {
-    }
-
-
-    @Column(name = "address", nullable = true)
 
 
 

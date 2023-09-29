@@ -41,8 +41,8 @@ public class ProductEntity {
     private Integer rating;
     private Long selled;
 
-    @OneToOne(mappedBy = "product")
-    private OrderItemEntity orderItem;
+//    @OneToOne(mappedBy = "product")
+//    private OrderItemEntity orderItem;
     @Transient
     public String getPhotosImagePath() {
         if (img == null || id == null) return null;

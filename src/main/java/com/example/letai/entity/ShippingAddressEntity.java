@@ -38,7 +38,7 @@ public class ShippingAddressEntity {
     @Column(name="phone", nullable = false)
     private String phone;
 
-    @OneToOne(mappedBy = "shippingAddress")
-    private OrderEntity shippingAddress;
+//    @OneToOne(mappedBy = "shippingAddress")
+//    private OrderEntity shippingAddress;
 
 }

@@ -8,29 +8,42 @@ import org.springframework.stereotype.Component;
 public class UserConverter {
     public UserDTO toDto(UserEntity entity) {
         UserDTO result = new UserDTO();
-        result.setId(entity.getId());
-        result.setFullName(entity.getFullName());
-        result.setPassword(entity.getPassword());
 
+        result.setId(entity.getId());
         result.setEmail(entity.getEmail());
+
+        result.setPassword(entity.getPassword());
+        result.setFullName(entity.getFullName());
         result.setAddress(entity.getAddress());
 
         result.setLocked(entity.getLocked());
-        result.setEnabled(entity.getEnabled());
         result.setAppUserRole(entity.getAppUserRole());
+        result.setPhone(entity.getPhone());
+
+        result.setCity(entity.getCity());
+        result.setAvatar(entity.getAvatar());
+        result.setEnabled(entity.getEnabled());
+
         return result;
     }
 
     public UserEntity toEntity(UserDTO dto) {
         UserEntity result = new UserEntity();
+
         result.setId(dto.getId());
         result.setAddress(dto.getAddress());
         result.setEmail(dto.getEmail());
+
         result.setPassword(dto.getPassword());
         result.setFullName(dto.getFullName());
         result.setLocked(dto.getLocked());
+
         result.setEnabled(dto.getEnabled());
         result.setAppUserRole(dto.getAppUserRole());
+
+        result.setCity(dto.getCity());
+        result.setPhone(dto.getPhone());
+        result.setCity(dto.getCity());
         return result;
     }
 
@@ -38,11 +51,16 @@ public class UserConverter {
         result.setId(dto.getId());
         result.setAddress(dto.getAddress());
         result.setEmail(dto.getEmail());
+
         result.setPassword(dto.getPassword());
         result.setFullName(dto.getFullName());
         result.setLocked(dto.getLocked());
+
         result.setEnabled(dto.getEnabled());
         result.setAppUserRole(dto.getAppUserRole());
+        result.setAvatar(dto.getAvatar());
+        result.setPhone(dto.getPhone());
+        result.setCity(dto.getCity());
         return result;
     }
 }
