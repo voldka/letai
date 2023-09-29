@@ -6,6 +6,8 @@ import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
+import javax.validation.constraints.Email;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import java.util.Collection;
 import java.util.Collections;
@@ -14,6 +16,7 @@ import java.util.Collections;
 public class UserDTO {
 
     private Long id;
+    @Email
     @NotBlank(message = "Email is mandatory")
     private String email;
     @NotBlank(message = "Password is mandatory")
@@ -23,24 +26,33 @@ public class UserDTO {
 
     private String address;
 
+    private AppUserRole appUserRole;
+
+    private String phone;
+    private String avatar;
+    private String city;
+
     private Boolean locked = false;
     private Boolean enabled = false;
 
-    private AppUserRole appUserRole = AppUserRole.USER;
     public Collection<? extends GrantedAuthority> getAuthorities() {
         SimpleGrantedAuthority authority =
                 new SimpleGrantedAuthority(appUserRole.name());
         return Collections.singletonList(authority);
     }
+
     public boolean isAccountNonExpired() {
         return true;
     }
+
     public boolean isAccountNonLocked() {
         return !locked;
     }
+
     public boolean isCredentialsNonExpired() {
         return true;
     }
+
     public boolean isEnabled() {
         return enabled;
     }
