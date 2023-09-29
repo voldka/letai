@@ -1,9 +1,8 @@
-package com.springdoan.demo.entity;
+package com.example.letai.entity;
 
 import lombok.*;
 
 import javax.persistence.*;
-import javax.persistence.Entity;
 
 @Getter
 @Setter

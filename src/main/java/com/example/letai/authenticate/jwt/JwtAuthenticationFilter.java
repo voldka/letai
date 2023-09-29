@@ -1,4 +1,4 @@
-package com.example.letai.jwt;
+package com.example.letai.authenticate.jwt;
 /*******************************************************
  * For Vietnamese readers:
  *    Các bạn thân mến, mình rất vui nếu project này giúp 

@@ -1,4 +1,4 @@
-package com.example.letai.config;
+package com.example.letai.authenticate.config;
 /*******************************************************
  * For Vietnamese readers:
  *    Các bạn thân mến, mình rất vui nếu project này giúp 
@@ -8,7 +8,7 @@ package com.example.letai.config;
  *    Xin cảm ơn!
  *******************************************************/
 
-import com.example.letai.jwt.JwtAuthenticationFilter;
+import com.example.letai.authenticate.jwt.JwtAuthenticationFilter;
 import com.example.letai.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;

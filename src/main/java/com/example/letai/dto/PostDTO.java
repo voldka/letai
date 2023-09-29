@@ -1,4 +1,4 @@
-package com.springdoan.demo.dto;
+package com.example.letai.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;

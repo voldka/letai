@@ -1,4 +1,4 @@
-package com.springdoan.demo.entity.enums;
+package com.example.letai.entity.enums;
 
 public enum AppUserRole {
     USER,

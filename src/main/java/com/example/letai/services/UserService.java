@@ -1,4 +1,4 @@
-package com.example.letai.user;
+package com.example.letai.services;
 /*******************************************************
  * For Vietnamese readers:
  *    Các bạn thân mến, mình rất vui nếu project này giúp 
@@ -9,6 +9,8 @@ package com.example.letai.user;
  *******************************************************/
 
 import com.example.letai.entity.UserEntity;
+import com.example.letai.repository.UserRepository;
+import com.example.letai.authenticate.config.user.CustomUserDetails;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -16,6 +18,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.Optional;
 
 /**
  * Copyright 2019 {@author Loda} (https://loda.me).
@@ -33,11 +36,11 @@ public class UserService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) {
         // Kiểm tra xem user có tồn tại trong database không?
-        UserEntity user = userRepository.findByUsername(username);
-        if (user == null) {
+        Optional<UserEntity> user = userRepository.findByEmail(username);
+        if (user.isEmpty()) {
             throw new UsernameNotFoundException(username);
         }
-        return new CustomUserDetails(user);
+        return new CustomUserDetails(user.get());
     }
 
     // JWTAuthenticationFilter sẽ sử dụng hàm này

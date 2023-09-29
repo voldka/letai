@@ -1,4 +1,4 @@
-package com.example.letai.jwt;
+package com.example.letai.authenticate.jwt;
 /*******************************************************
  * For Vietnamese readers:
  *    Các bạn thân mến, mình rất vui nếu project này giúp 
@@ -9,7 +9,7 @@ package com.example.letai.jwt;
  *******************************************************/
 
 
-import com.example.letai.config.user.CustomUserDetails;
+import com.example.letai.authenticate.config.user.CustomUserDetails;
 import io.jsonwebtoken.*;
 import lombok.extern.slf4j.Slf4j;
 

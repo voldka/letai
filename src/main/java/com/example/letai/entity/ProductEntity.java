@@ -1,4 +1,4 @@
-package com.springdoan.demo.entity;
+package com.example.letai.entity;
 
 import lombok.AccessLevel;
 import lombok.Data;

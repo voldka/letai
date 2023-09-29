@@ -1,10 +1,10 @@
-package com.springdoan.demo.services;
+package com.example.letai.services;
 
-import com.springdoan.demo.converter.ProductConverter;
-import com.springdoan.demo.dto.ProductDTO;
-import com.springdoan.demo.entity.ProductEntity;
-import com.springdoan.demo.exception.UserNotFoundException;
-import com.springdoan.demo.repository.ProductRepository;
+
+import com.example.letai.dto.ProductDTO;
+import com.example.letai.dto.converter.ProductConverter;
+import com.example.letai.entity.ProductEntity;
+import com.example.letai.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -37,19 +37,16 @@ public class ProductService {
             return null;
         }
     }
-    public ProductDTO get(Long id) throws UserNotFoundException {
+    public ProductDTO get(Long id) {
         Optional<ProductEntity> result = productRepository.findById(id);
         if (result.isPresent()) {
             ProductDTO rs = productConverter.toDto(result.get());
             return rs;
         }
-        throw new UserNotFoundException("Could not find any product with ID " + id);
+        return null;
     }
-    public void delete(Long id) throws UserNotFoundException {
+    public void delete(Long id)  {
         Long count = productRepository.countById(id);
-        if (count == null || count == 0) {
-            throw new UserNotFoundException("Could not find any product with ID " + id);
-        }
         productRepository.deleteById(id);
     }
 

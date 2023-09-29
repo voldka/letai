@@ -1,4 +1,4 @@
-package com.example.letai.restcontroller;
+package com.example.letai.controller.restcontroller;
 /*******************************************************
  * For Vietnamese readers:
  *    Các bạn thân mến, mình rất vui nếu project này giúp 
@@ -8,11 +8,11 @@ package com.example.letai.restcontroller;
  *    Xin cảm ơn!
  *******************************************************/
 
-import com.example.letai.jwt.JwtTokenProvider;
-import com.example.letai.payload.LoginRequest;
-import com.example.letai.payload.LoginResponse;
-import com.example.letai.payload.RandomStuff;
-import com.example.letai.config.user.CustomUserDetails;
+import com.example.letai.authenticate.jwt.JwtTokenProvider;
+import com.example.letai.authenticate.payload.LoginRequest;
+import com.example.letai.authenticate.payload.LoginResponse;
+import com.example.letai.authenticate.payload.RandomStuff;
+import com.example.letai.authenticate.config.user.CustomUserDetails;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;

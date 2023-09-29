@@ -1,6 +1,7 @@
-package com.springdoan.demo.repository;
+package com.example.letai.repository;
 
-import com.springdoan.demo.entity.PostEntity;
+
+import com.example.letai.entity.PostEntity;
 import org.springframework.data.repository.Repository;
 
 public interface PostRepository extends Repository<PostEntity,Long> {

@@ -1,6 +1,7 @@
-package com.springdoan.demo.repository;
+package com.example.letai.repository;
 
-import com.springdoan.demo.entity.ProductEntity;
+
+import com.example.letai.entity.ProductEntity;
 import org.springframework.data.repository.CrudRepository;
 
 public interface ProductRepository extends CrudRepository<ProductEntity,Long> {

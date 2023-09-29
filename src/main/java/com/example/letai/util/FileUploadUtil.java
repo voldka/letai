@@ -1,4 +1,4 @@
-package com.springdoan.demo.util;
+package com.example.letai.util;
 
 import org.springframework.web.multipart.MultipartFile;
 

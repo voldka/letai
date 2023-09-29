@@ -1,25 +1,35 @@
-package com.example.letai.user;
-/*******************************************************
- * For Vietnamese readers:
- *    Các bạn thân mến, mình rất vui nếu project này giúp 
- * ích được cho các bạn trong việc học tập và công việc. Nếu 
- * bạn sử dụng lại toàn bộ hoặc một phần source code xin để 
- * lại dường dẫn tới github hoặc tên tác giá.
- *    Xin cảm ơn!
- *******************************************************/
+package com.example.letai.repository;
 
 import com.example.letai.entity.UserEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
-/**
- * Copyright 2019 {@author Loda} (https://loda.me).
- * This project is licensed under the MIT license.
- *
- * @since 4/30/2019
- * Github: https://github.com/loda-kun
- */
+import java.util.Optional;
+@Transactional(readOnly = true)
 @Repository
-public interface UserRepository extends JpaRepository<UserEntity, Long> {
-    UserEntity findByUsername(String username);
+public interface UserRepository extends JpaRepository<UserEntity,Long> {
+
+
+    Optional<UserEntity> findById(Long id);
+    @Transactional
+    //đảm bảo giao dịch sẽ dc mở và đóng sau khi phương thức hoàn thanh neu lỗi sẽ rollback
+    @Modifying
+    //dùng để chỉ định rằng phương thức này sẽ thực hiện các thay đổi
+    UserEntity save(UserEntity user);
+
+    Long countById(Long id);
+    @Query("SELECT u FROM UserEntity u WHERE u.email = ?1")
+    Optional<UserEntity> findByEmail(String email);
+
+
+    @Modifying
+    @Transactional
+    @Query("UPDATE UserEntity a " +
+            "SET a.enabled = TRUE " +
+            "WHERE a.email = ?1")
+    int enableAppUser(String username);
 }
+

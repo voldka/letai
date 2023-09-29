@@ -1,4 +1,4 @@
-package com.springdoan.demo.entity;
+package com.example.letai.entity;
 
 import lombok.Data;
 
@@ -31,8 +31,7 @@ public class OrderEntity {
         return id;
     }
 
-    @OneToMany(targetEntity=OrderItemEntity.class,orphanRemoval = true, cascade = {CascadeType.ALL}, fetch = FetchType.LAZY)
-    @JoinColumn(name = "order_id", nullable = false)
+    @OneToMany(mappedBy = "order",targetEntity=OrderItemEntity.class,orphanRemoval = true, cascade = {CascadeType.ALL}, fetch = FetchType.LAZY)
     private List<OrderItemEntity> OrderItems = new ArrayList<>();
 
     @OneToOne(cascade = CascadeType.ALL)

@@ -1,9 +1,10 @@
-package com.springdoan.demo.services;
+package com.example.letai.services;
 
-import com.springdoan.demo.converter.PostConverter;
-import com.springdoan.demo.dto.PostDTO;
-import com.springdoan.demo.entity.PostEntity;
-import com.springdoan.demo.repository.PostRepository;
+
+import com.example.letai.dto.PostDTO;
+import com.example.letai.dto.converter.PostConverter;
+import com.example.letai.entity.PostEntity;
+import com.example.letai.repository.PostRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

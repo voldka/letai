@@ -1,8 +1,9 @@
-package com.springdoan.demo;
+package com.example.letai;
 
 
-import com.springdoan.demo.entity.UserEntity;
-import com.springdoan.demo.repository.UserRepository;
+
+import com.example.letai.entity.UserEntity;
+import com.example.letai.repository.UserRepository;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,8 +27,6 @@ public class UserRepositoryTests {
     @Test
     public void testAddUser(){
         UserEntity user = new UserEntity();
-        user.setFullName("tran gian khang");
-        user.setUsername("trangiakhang");
         user.setAddress("lo1,ham nghi");
         user.setEmail("tailx2301@gmai.com");
         user.setPassword("matkhau");

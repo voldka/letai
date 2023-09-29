@@ -1,21 +1,19 @@
-package com.springdoan.demo.entity;
+package com.example.letai.entity;
 
 
-import com.springdoan.demo.entity.enums.AppUserRole;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+
+import com.example.letai.entity.enums.AppUserRole;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.Optional;
 
-@Getter
-@Setter
+
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "user")
+@Data
+@Table(name = "user",uniqueConstraints = @UniqueConstraint(columnNames = "email"))
 public class UserEntity {
 
     @SequenceGenerator(
@@ -30,42 +28,44 @@ public class UserEntity {
     @Id
     @Column(name = "id", nullable = false)
     private Long id;
-    @Column(name = "username", nullable = false, length = 45)
-    private String username;
+
+    @Column(name = "email" , nullable = false)
+    private String email;
     @Column(name = "password",nullable = false, length = 45)
     private String password;
     @Column(name = "fullname",nullable = false, length = 45)
     private String fullName;
 
-    @Column(name = "email" , nullable = true)
-    private String email;
+
     @Enumerated(EnumType.STRING)
     private AppUserRole appUserRole;
 
     private String phone;
     private String avatar;
     private String city;
+    private String address;
+
     private Boolean locked = false;
     private Boolean enabled = false;
 
+    public UserEntity(Long id, String email, String password, String fullName, AppUserRole appUserRole, String phone, String avatar, String city, String address) {
+        this.id = id;
+        this.email = email;
+        this.password = password;
+        this.fullName = fullName;
+        this.appUserRole = appUserRole;
+        this.phone = phone;
+        this.avatar = avatar;
+        this.city = city;
+        this.address = address;
+    }
+
+    public UserEntity(int i, String s, String s1, String s2, String s3, AppUserRole appUserRole, String s4, String s5) {
+    }
+
 
     @Column(name = "address", nullable = true)
-    private String address;
 
-    public UserEntity(Optional<UserEntity> user) {
-        UserEntity rs = user.get();
-        this.id = rs.id;
-        this.locked=rs.locked;
-        this.address=rs.address;
-
-        this.appUserRole=rs.appUserRole;
-        this.enabled=rs.enabled;
-        this.email=rs.email;
-
-        this.fullName=rs.fullName;
-        this.username=rs.username;
-        this.password=rs.password;
-    }
 
 
     public Long getId() {
@@ -76,17 +76,7 @@ public class UserEntity {
         this.id = id;
     }
 
-    @Override
-    public String toString() {
-        return "UserEntity{" +
-                "id=" + id +
-                ", userName='" + username + '\'' +
-                ", password='" + password + '\'' +
-                ", fullName='" + fullName + '\'' +
-                ", email='" + email + '\'' +
-                ", address='" + address + '\'' +
-                '}';
-    }
+
 
 
 //    @Override

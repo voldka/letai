@@ -1,4 +1,4 @@
-package com.springdoan.demo.dto;
+package com.example.letai.dto;
 
 public class CartItemDTO {
     private Long productId;

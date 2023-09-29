@@ -1,10 +1,12 @@
-package com.springdoan.demo.dto;
+package com.example.letai.dto;
 
-import com.springdoan.demo.entity.enums.AppUserRole;
+
+import com.example.letai.entity.enums.AppUserRole;
 import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
+import javax.validation.constraints.NotBlank;
 import java.util.Collection;
 import java.util.Collections;
 
@@ -12,28 +14,19 @@ import java.util.Collections;
 public class UserDTO {
 
     private Long id;
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    private String username;
-    private String password;
-    private String fullName;
+    @NotBlank(message = "Email is mandatory")
     private String email;
+    @NotBlank(message = "Password is mandatory")
+    private String password;
+    @NotBlank(message = "FullName is mandatory")
+    private String fullName;
 
     private String address;
 
     private Boolean locked = false;
     private Boolean enabled = false;
-    private AppUserRole appUserRole;
-    public String getUsername() {
-        return username;
-    }
+
+    private AppUserRole appUserRole = AppUserRole.USER;
     public Collection<? extends GrantedAuthority> getAuthorities() {
         SimpleGrantedAuthority authority =
                 new SimpleGrantedAuthority(appUserRole.name());
