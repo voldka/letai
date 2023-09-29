@@ -1,11 +1,9 @@
 package com.example.letai.entity;
 
-import lombok.AccessLevel;
-import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
+import java.util.Collection;
 
 @Data
 @Entity
@@ -41,8 +39,11 @@ public class ProductEntity {
     private Integer rating;
     private Long selled;
 
-    @OneToOne(mappedBy = "product")
-    private OrderItemEntity orderItem;
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL) // Quan hệ 1-n với đối tượng ở dưới (Person) (1 địa điểm có nhiều người ở)
+    // MapopedBy trỏ tới tên biến Address ở trong Person.
+    @EqualsAndHashCode.Exclude // không sử dụng trường này trong equals và hashcode
+    @ToString.Exclude // Khoonhg sử dụng trong toString()
+    private Collection<OrderItemEntity> items;
     @Transient
     public String getPhotosImagePath() {
         if (img == null || id == null) return null;

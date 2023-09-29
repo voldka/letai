@@ -1,33 +1,20 @@
 package com.example.letai.entity;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
 
 import javax.persistence.*;
 
 @Data
 @Entity
-@Table(name = "order_item")
+@Table(name = "itemorder")
 public class OrderItemEntity {
-    @SequenceGenerator(
-            name = "order_item_sequence",
-            sequenceName = "order_item_sequence",
-            allocationSize = 1
-    )
-    @GeneratedValue(
-            strategy = GenerationType.SEQUENCE,
-            generator = "order_item_sequence"
-    )
+
     @Id
     @Column(name = "id", nullable = false)
     private Long id;
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public Long getId() {
-        return id;
-    }
 
     @Column(name = "name", nullable = false)
     private String name;
@@ -39,11 +26,15 @@ public class OrderItemEntity {
     private Long price;
     private Long discount;
 
-    @ManyToOne
-    @JoinColumn(name = "order_id", referencedColumnName = "id")
-    private OrderEntity order;
+    @ManyToOne // LAZY để tránh việc truy xuất dữ liệu không cần thiết. Lúc nào cần thì mới query
+    @JoinColumn(name = "order_id") // thông qua khóa ngoại address_id
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
+    private OrderProductEntity order;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "product_id", referencedColumnName = "id")
+    @ManyToOne // LAZY để tránh việc truy xuất dữ liệu không cần thiết. Lúc nào cần thì mới query
+    @JoinColumn(name = "product_id") // thông qua khóa ngoại address_id
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
     private ProductEntity product;
 }
