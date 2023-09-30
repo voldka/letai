@@ -1,4 +1,4 @@
-package com.example.letai.dto;
+package com.example.letai.model.dto;
 
 import lombok.Data;
 

@@ -1,8 +1,8 @@
-package com.example.letai.dto.converter;
+package com.example.letai.model.dto.converter;
 
 
-import com.example.letai.dto.ProductDTO;
-import com.example.letai.entity.ProductEntity;
+import com.example.letai.model.dto.ProductDTO;
+import com.example.letai.model.entity.ProductEntity;
 import org.springframework.stereotype.Component;
 
 @Component

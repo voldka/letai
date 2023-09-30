@@ -2,7 +2,7 @@ package com.example.letai;
 
 
 
-import com.example.letai.entity.UserEntity;
+import com.example.letai.model.entity.UserEntity;
 import com.example.letai.repository.UserRepository;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;

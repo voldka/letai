@@ -1,4 +1,4 @@
-package com.example.letai.entity;
+package com.example.letai.model.entity;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;

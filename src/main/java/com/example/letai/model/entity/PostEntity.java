@@ -1,4 +1,4 @@
-package com.example.letai.entity;
+package com.example.letai.model.entity;
 
 import lombok.*;
 
@@ -11,8 +11,7 @@ import javax.persistence.*;
 @Entity
 @Table(name = "posts")
 public class PostEntity {
-    @Getter(AccessLevel.NONE)
-    @Setter(AccessLevel.NONE)
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "idposts", nullable = false)

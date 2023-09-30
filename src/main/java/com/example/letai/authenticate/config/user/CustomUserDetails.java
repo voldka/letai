@@ -8,7 +8,7 @@ package com.example.letai.authenticate.config.user;
  *    Xin cảm ơn!
  *******************************************************/
 
-import com.example.letai.entity.UserEntity;
+import com.example.letai.model.entity.UserEntity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;

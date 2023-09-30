@@ -1,7 +1,7 @@
 package com.example.letai.services;
 
 
-import com.example.letai.dto.CartItemDTO;
+import com.example.letai.model.dto.CartItemDTO;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpSession;

@@ -1,16 +1,11 @@
-package com.example.letai.dto;
+package com.example.letai.model.dto;
 
 
-import com.example.letai.entity.enums.AppUserRole;
+import com.example.letai.model.entity.enums.AppUserRole;
 import lombok.Data;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 import javax.validation.constraints.Email;
-import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
-import java.util.Collection;
-import java.util.Collections;
 
 @Data
 public class UserDTO {
@@ -26,7 +21,7 @@ public class UserDTO {
 
     private String address;
 
-    private AppUserRole appUserRole;
+    private AppUserRole appUserRole = AppUserRole.USER;
 
     private String phone;
     private String avatar;
@@ -35,12 +30,15 @@ public class UserDTO {
     private Boolean locked = false;
     private Boolean enabled = false;
 
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        SimpleGrantedAuthority authority =
-                new SimpleGrantedAuthority(appUserRole.name());
-        return Collections.singletonList(authority);
+
+
+    public Long getId() {
+        return id;
     }
 
+    public void setId(Long id) {
+        this.id = id;
+    }
     public boolean isAccountNonExpired() {
         return true;
     }
@@ -56,6 +54,5 @@ public class UserDTO {
     public boolean isEnabled() {
         return enabled;
     }
-
 
 }

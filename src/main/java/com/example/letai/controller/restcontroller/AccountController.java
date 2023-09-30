@@ -1,26 +1,22 @@
 package com.example.letai.controller.restcontroller;
 
-import com.example.letai.authenticate.config.user.CustomUserDetails;
 import com.example.letai.authenticate.jwt.JwtTokenProvider;
-import com.example.letai.authenticate.payload.LoginRequest;
-import com.example.letai.authenticate.payload.LoginResponse;
-import com.example.letai.dto.UserDTO;
-import com.example.letai.dto.converter.UserConverter;
+import com.example.letai.model.dto.UserDTO;
 import com.example.letai.services.UserService;
-import org.h2.engine.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+import javax.validation.Valid;
+
+import com.example.letai.model.payload.LoginRequest;
+import com.example.letai.model.payload.LoginResponse;
+import com.example.letai.model.payload.RandomStuff;
+import com.example.letai.authenticate.config.user.CustomUserDetails;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.validation.FieldError;
-import org.springframework.web.bind.MethodArgumentNotValidException;
-import org.springframework.web.bind.annotation.*;
-
-import javax.validation.Valid;
-import java.util.HashMap;
-import java.util.Map;
 
 @RestController
 @RequestMapping("/api")
@@ -29,6 +25,9 @@ public class AccountController {
     private JwtTokenProvider tokenProvider;
     @Autowired
     private UserService userService;
+    @Autowired
+    AuthenticationManager authenticationManager;
+
 
 
     @PostMapping("/sign-up")
@@ -42,16 +41,31 @@ public class AccountController {
         }
     }
 
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
-    @ExceptionHandler(MethodArgumentNotValidException.class)
-    public Map<String, String> handleValidationExceptions(MethodArgumentNotValidException ex) {
-        Map<String, String> errors = new HashMap<>();
+    @PostMapping("/login")
+    public LoginResponse authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
 
-        ex.getBindingResult().getAllErrors().forEach((error) -> {
-            String fieldName = ((FieldError) error).getField();
-            String errorMessage = error.getDefaultMessage();
-            errors.put(fieldName, errorMessage);
-        });
-        return errors;
+        // Xác thực thông tin người dùng Request lên
+        Authentication authentication = authenticationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(
+                        loginRequest.getUsername(),
+                        loginRequest.getPassword()
+                )
+        );
+
+        // Nếu không xảy ra exception tức là thông tin hợp lệ
+        // Set thông tin authentication vào Security Context
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+
+        // Trả về jwt cho người dùng.
+        String jwt = tokenProvider.generateToken((CustomUserDetails)authentication.getPrincipal());
+        return new LoginResponse(jwt);
     }
+
+    // Api /api/random yêu cầu phải xác thực mới có thể request
+    @GetMapping("/random")
+    public RandomStuff randomStuff(){
+        return new RandomStuff("JWT Hợp lệ mới có thể thấy được message này");
+    }
+
+
 }

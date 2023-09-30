@@ -1,4 +1,4 @@
-package com.example.letai.entity;
+package com.example.letai.model.entity;
 
 import lombok.*;
 
@@ -9,17 +9,6 @@ import java.util.Collection;
 @Entity
 @Table(name = "product")
 public class ProductEntity {
-    @Getter(AccessLevel.NONE)
-    @Setter(AccessLevel.NONE)
-    @SequenceGenerator(
-            name = "product_sequence",
-            sequenceName = "product_sequence",
-            allocationSize = 1
-    )
-    @GeneratedValue(
-            strategy = GenerationType.SEQUENCE,
-            generator = "product_sequence"
-    )
     @Id
     @Column(name = "id", nullable = false)
     private Long id;
@@ -39,8 +28,7 @@ public class ProductEntity {
     private Integer rating;
     private Long selled;
 
-    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL) // Quan hệ 1-n với đối tượng ở dưới (Person) (1 địa điểm có nhiều người ở)
-    // MapopedBy trỏ tới tên biến Address ở trong Person.
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
     @EqualsAndHashCode.Exclude // không sử dụng trường này trong equals và hashcode
     @ToString.Exclude // Khoonhg sử dụng trong toString()
     private Collection<OrderItemEntity> items;

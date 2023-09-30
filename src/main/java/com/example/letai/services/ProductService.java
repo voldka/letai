@@ -1,9 +1,9 @@
 package com.example.letai.services;
 
 
-import com.example.letai.dto.ProductDTO;
-import com.example.letai.dto.converter.ProductConverter;
-import com.example.letai.entity.ProductEntity;
+import com.example.letai.model.dto.ProductDTO;
+import com.example.letai.model.dto.converter.ProductConverter;
+import com.example.letai.model.entity.ProductEntity;
 import com.example.letai.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

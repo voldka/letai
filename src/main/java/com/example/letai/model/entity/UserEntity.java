@@ -1,21 +1,19 @@
-package com.example.letai.entity;
+package com.example.letai.model.entity;
 
 
 
-import com.example.letai.entity.enums.AppUserRole;
+import com.example.letai.model.entity.enums.AppUserRole;
 import lombok.*;
 
 import javax.persistence.*;
-import java.util.Optional;
 
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
 @Data
-@Table(name = "user",uniqueConstraints = @UniqueConstraint(columnNames = "email"))
+@Table(name = "user")
 public class UserEntity {
-
     @SequenceGenerator(
             name = "user_sequence",
             sequenceName = "user_sequence",
@@ -28,16 +26,17 @@ public class UserEntity {
     @Id
     @Column(name = "id", nullable = false)
     private Long id;
+
     @Column(name = "email" , nullable = false)
     private String email;
-    @Column(name = "password",nullable = false, length = 45)
+    @Column(name = "password",nullable = false)
     private String password;
     @Column(name = "fullname",nullable = false, length = 45)
     private String fullName;
     @Column(name = "address", nullable = true)
     private String address ="chưa cập nhật";
     @Enumerated(EnumType.STRING)
-    private AppUserRole appUserRole = AppUserRole.USER;
+    private AppUserRole appUserRole;
     private String phone;
     private String avatar;
     private String city;
@@ -58,6 +57,8 @@ public class UserEntity {
         this.address = address;
     }
 
+    public UserEntity(UserEntity entity) {
+    }
 
 
     public Long getId() {

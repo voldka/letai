@@ -1,7 +1,7 @@
 package com.example.letai.repository;
 
 
-import com.example.letai.entity.ProductEntity;
+import com.example.letai.model.entity.ProductEntity;
 import org.springframework.data.repository.CrudRepository;
 
 public interface ProductRepository extends CrudRepository<ProductEntity,Long> {

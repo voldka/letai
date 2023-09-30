@@ -1,4 +1,4 @@
-package com.example.letai.authenticate.payload;
+package com.example.letai.model.payload;
 /*******************************************************
  * For Vietnamese readers:
  *    Các bạn thân mến, mình rất vui nếu project này giúp 
@@ -8,9 +8,8 @@ package com.example.letai.authenticate.payload;
  *    Xin cảm ơn!
  *******************************************************/
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
-
-import javax.validation.constraints.NotBlank;
 
 /**
  * Copyright 2019 {@author Loda} (https://loda.me).
@@ -20,10 +19,7 @@ import javax.validation.constraints.NotBlank;
  * Github: https://github.com/loda-kun
  */
 @Data
-public class LoginRequest {
-    @NotBlank
-    private String username;
-
-    @NotBlank
-    private String password;
+@AllArgsConstructor
+public class RandomStuff {
+    private String message;
 }

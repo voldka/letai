@@ -8,16 +8,15 @@ package com.example.letai.services;
  *    Xin cảm ơn!
  *******************************************************/
 
-import com.example.letai.dto.UserDTO;
-import com.example.letai.dto.converter.UserConverter;
-import com.example.letai.entity.UserEntity;
+import com.example.letai.model.dto.UserDTO;
+import com.example.letai.model.dto.converter.UserConverter;
+import com.example.letai.model.entity.UserEntity;
 import com.example.letai.repository.UserRepository;
 import com.example.letai.authenticate.config.user.CustomUserDetails;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -64,14 +63,19 @@ public class UserService implements UserDetailsService {
     }
     public UserDTO save(UserDTO userDTO) {
         try {
-            UserEntity userEntity;
+            UserEntity userEntity = new UserEntity(userConverter.toEntity(userDTO));
             userDTO.setPassword(passwordEncoder.encode(userDTO.getPassword()));
             userEntity = userConverter.toEntity(userDTO);
-            UserEntity users = userRepository.save(userEntity);
-            if(users != null &&users.getId()!=0){
-                return userDTO;
-            }else{
-                return null;
+
+            if (!userRepository.findByEmail(userEntity.getEmail()).isPresent()) {
+                UserEntity users = userRepository.save(userEntity);
+                if(users != null &&users.getId()!=0){
+                    return userConverter.toDto(users);
+                }else{
+                    return null;
+                }
+            } else {
+                throw new Exception("Email already exists");
             }
         }
         catch(Exception e) {
