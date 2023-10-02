@@ -8,6 +8,8 @@ package com.example.letai.services;
  *    Xin cảm ơn!
  *******************************************************/
 
+import com.example.letai.exception.exceptionhandler.EmailAlreadyExistsException;
+import com.example.letai.model.body.ErrorResponse;
 import com.example.letai.model.dto.UserDTO;
 import com.example.letai.model.dto.converter.UserConverter;
 import com.example.letai.model.entity.UserEntity;
@@ -21,6 +23,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.time.LocalDateTime;
 import java.util.Optional;
 
 /**
@@ -46,6 +49,7 @@ public class UserService implements UserDetailsService {
     public UserDetails loadUserByUsername(String username) {
         // Kiểm tra xem user có tồn tại trong database không?
         Optional<UserEntity> user = userRepository.findByEmail(username);
+
         if (user.isEmpty()) {
             throw new UsernameNotFoundException(username);
         }
@@ -61,26 +65,20 @@ public class UserService implements UserDetailsService {
 
         return new CustomUserDetails(user);
     }
-    public UserDTO save(UserDTO userDTO) {
-        try {
-            UserEntity userEntity = new UserEntity(userConverter.toEntity(userDTO));
-            userDTO.setPassword(passwordEncoder.encode(userDTO.getPassword()));
-            userEntity = userConverter.toEntity(userDTO);
 
-            if (!userRepository.findByEmail(userEntity.getEmail()).isPresent()) {
-                UserEntity users = userRepository.save(userEntity);
-                if(users != null &&users.getId()!=0){
-                    return userConverter.toDto(users);
-                }else{
-                    return null;
-                }
+    public UserDTO save(UserDTO userDTO) {
+        UserEntity userEntity = new UserEntity(userConverter.toEntity(userDTO));
+        userDTO.setPassword(passwordEncoder.encode(userDTO.getPassword()));
+        userEntity = userConverter.toEntity(userDTO);
+        if (!userRepository.findByEmail(userEntity.getEmail()).isPresent()) {
+            UserEntity users = userRepository.save(userEntity);
+            if (users != null && users.getId() != 0) {
+                return userConverter.toDto(users);
             } else {
-                throw new Exception("Email already exists");
+                return null;
             }
-        }
-        catch(Exception e) {
-            System.out.println(e);
-            return null;
+        } else {
+            throw new EmailAlreadyExistsException("email already exist");
         }
     }
 }
