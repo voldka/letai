@@ -1,6 +1,5 @@
 package com.example.letai.controller.restcontroller;
 
-import com.example.letai.authenticate.jwt.JwtTokenProvider;
 import com.example.letai.model.dto.UserDTO;
 import com.example.letai.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +11,6 @@ import javax.validation.Valid;
 import com.example.letai.model.payload.LoginRequest;
 import com.example.letai.model.payload.LoginResponse;
 import com.example.letai.model.payload.RandomStuff;
-import com.example.letai.authenticate.config.user.CustomUserDetails;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;

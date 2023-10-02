@@ -21,7 +21,7 @@ public class UserDTO {
 
     private String address;
 
-    private AppUserRole appUserRole = AppUserRole.USER;
+    private AppUserRole appUserRole = AppUserRole.ROLE_USER;
 
     private String phone;
     private String avatar;
