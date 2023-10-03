@@ -50,14 +50,26 @@ public class SpringSecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Override
     public void configure(HttpSecurity http) throws Exception {
         http.csrf().disable()
-                .authorizeRequests().antMatchers("/helloadmin").hasRole("ADMIN")
+                .authorizeRequests().antMatchers("/helloadmin", "/admin/*").hasRole("ADMIN")
                 .antMatchers("/hellouser").hasAnyRole("USER", "ADMIN")
-                .antMatchers("/authenticate", "/register").permitAll()
+                .antMatchers("/authenticate", "/register", "/api/*", "/*").permitAll()
                 .anyRequest().authenticated()
-                .and().exceptionHandling().authenticationEntryPoint(jwtAuthenticationEntryPoint).
-                and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).
-                and().addFilterBefore(customJwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
+                .and()
+                .formLogin().loginPage("/admin/login").loginProcessingUrl("/do-login").defaultSuccessUrl("/admin/home").permitAll()
+                .and()
+                .logout().permitAll()
+                .and()
+                .exceptionHandling().authenticationEntryPoint(jwtAuthenticationEntryPoint).
+                and()
+                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).
+                and()
+                .addFilterBefore(customJwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
     }
-
+    @Autowired
+    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
+        auth
+                .inMemoryAuthentication()
+                .withUser("admin123").password("admin123").roles("ADMIN");
+    }
 
 }
