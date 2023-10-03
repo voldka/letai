@@ -1,7 +1,7 @@
 package com.example.letai.model.entity.enums;
 
 public enum AppUserRole {
-    USER,
-    ADMIN,
-    OWNER
+    ROLE_USER,
+    ROLE_ADMIN,
+    ROLE_OWNER
 }

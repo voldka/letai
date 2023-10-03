@@ -36,7 +36,7 @@ public class UserEntity {
     @Column(name = "address", nullable = true)
     private String address ="chưa cập nhật";
     @Enumerated(EnumType.STRING)
-    private AppUserRole appUserRole;
+    private AppUserRole role;
     private String phone;
     private String avatar;
     private String city;
@@ -49,7 +49,7 @@ public class UserEntity {
         this.password = password;
 
         this.fullName = fullName;
-        this.appUserRole = appUserRole;
+        this.role = appUserRole;
         this.phone = phone;
 
         this.avatar = avatar;

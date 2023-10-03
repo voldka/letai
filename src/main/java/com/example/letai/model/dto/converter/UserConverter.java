@@ -2,6 +2,7 @@ package com.example.letai.model.dto.converter;
 
 import com.example.letai.model.dto.UserDTO;
 import com.example.letai.model.entity.UserEntity;
+import com.example.letai.model.entity.enums.AppUserRole;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -17,7 +18,7 @@ public class UserConverter {
         result.setAddress(entity.getAddress());
 
         result.setLocked(entity.getLocked());
-        result.setAppUserRole(entity.getAppUserRole());
+        result.setRole(String.valueOf(entity.getRole()));
         result.setPhone(entity.getPhone());
 
         result.setCity(entity.getCity());
@@ -39,7 +40,7 @@ public class UserConverter {
         result.setLocked(dto.getLocked());
 
         result.setEnabled(dto.getEnabled());
-        result.setAppUserRole(dto.getAppUserRole());
+        result.setRole(AppUserRole.valueOf(dto.getRole()));
 
         result.setCity(dto.getCity());
         result.setPhone(dto.getPhone());
@@ -57,7 +58,7 @@ public class UserConverter {
         result.setLocked(dto.getLocked());
 
         result.setEnabled(dto.getEnabled());
-        result.setAppUserRole(dto.getAppUserRole());
+        result.setRole(AppUserRole.valueOf(dto.getRole()));
         result.setAvatar(dto.getAvatar());
         result.setPhone(dto.getPhone());
         result.setCity(dto.getCity());
