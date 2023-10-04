@@ -53,7 +53,7 @@ public class SpringSecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .authorizeRequests().antMatchers("/helloadmin", "/admin/*").hasRole("ADMIN")
                 .antMatchers("/hellouser").hasAnyRole("USER", "ADMIN")
                 .antMatchers("/authenticate", "/register", "/api/*", "/*").permitAll()
-                .anyRequest().authenticated()
+                .anyRequest().permitAll()
                 .and()
                 .formLogin().loginPage("/admin/login").loginProcessingUrl("/do-login").defaultSuccessUrl("/admin/home").permitAll()
                 .and()
@@ -65,6 +65,7 @@ public class SpringSecurityConfiguration extends WebSecurityConfigurerAdapter {
                 and()
                 .addFilterBefore(customJwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
     }
+    //bug
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
         auth

@@ -1,16 +1,12 @@
 package com.example.letai.services;
 
 
-import com.example.letai.exception.UserNotFoundException;
+import com.example.letai.exception.exceptionhandler.UserNotFoundException;
 import com.example.letai.model.dto.UserDTO;
 import com.example.letai.model.dto.converter.UserConverter;
 import com.example.letai.model.entity.UserEntity;
 import com.example.letai.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 

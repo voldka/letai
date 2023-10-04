@@ -1,6 +1,6 @@
 package com.example.letai.controller.mvccontroller.admin;
 
-import com.example.letai.exception.UserNotFoundException;
+import com.example.letai.exception.exceptionhandler.UserNotFoundException;
 import com.example.letai.model.dto.UserDTO;
 import com.example.letai.model.entity.enums.AppUserRole;
 import com.example.letai.services.UserService;
