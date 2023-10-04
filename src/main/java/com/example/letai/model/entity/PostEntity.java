@@ -20,9 +20,7 @@ public class PostEntity {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "idposts", nullable = false)
     private Long id;
-    @NotBlank
     private String postName;
-    @NotBlank
     private String comment;
     @Column(name = "img", nullable = true, length = 255)
     private String img;

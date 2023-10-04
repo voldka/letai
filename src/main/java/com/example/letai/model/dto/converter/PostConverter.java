@@ -12,7 +12,7 @@ public class PostConverter {
         result.setId(entity.getId());
         result.setImg(entity.getImg());
         result.setComment(entity.getComment());
-        result.setComment(entity.getPostName());
+        result.setPostName(entity.getPostName());
         result.setCreatedAt(entity.getCreatedAt());
         result.setUpdatedAt(entity.getUpdatedAt());
         return result;
@@ -23,7 +23,7 @@ public class PostConverter {
         result.setId(dto.getId());
         result.setImg(dto.getImg());
         result.setComment(dto.getComment());
-        result.setComment(dto.getPostName());
+        result.setPostName(dto.getPostName());
         result.setCreatedAt(dto.getCreatedAt());
         result.setUpdatedAt(dto.getUpdatedAt());
         return result;
@@ -33,7 +33,7 @@ public class PostConverter {
         result.setId(dto.getId());
         result.setImg(dto.getImg());
         result.setComment(dto.getComment());
-        result.setComment(dto.getPostName());
+        result.setPostName(dto.getPostName());
         result.setCreatedAt(dto.getCreatedAt());
         result.setUpdatedAt(dto.getUpdatedAt());
         return result;
