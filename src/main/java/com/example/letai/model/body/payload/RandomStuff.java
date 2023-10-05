@@ -1,4 +1,4 @@
-package com.example.letai.model.payload;
+package com.example.letai.model.body.payload;
 /*******************************************************
  * For Vietnamese readers:
  *    Các bạn thân mến, mình rất vui nếu project này giúp 

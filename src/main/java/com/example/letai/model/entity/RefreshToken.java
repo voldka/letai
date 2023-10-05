@@ -1,21 +1,25 @@
 package com.example.letai.model.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
 import java.util.Date;
 
-@Data
 @Entity
 @EntityListeners(AuditingEntityListener.class)
 //@JsonIgnoreProperties(value = { "createdAt", "updatedAt" }, allowGetters = true)
-@Table(name = "accesstoken")
-public class AccessToken {
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@Table(name = "refreshtoken")
+public class RefreshToken {
     @Id
     @Column(name = "id", nullable = false)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Column(name="token",nullable = false)
     private String token;
@@ -24,4 +28,6 @@ public class AccessToken {
     @Temporal(TemporalType.TIMESTAMP)
     @CreatedDate
     private Date createdAt;
+
+
 }

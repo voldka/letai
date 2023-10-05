@@ -1,10 +1,13 @@
 package com.example.letai.controller.restcontroller;
 
 import com.example.letai.model.dto.PostDTO;
+import com.example.letai.model.dto.ProductDTO;
 import com.example.letai.model.entity.PostEntity;
 import com.example.letai.repository.PostRepository;
 import com.example.letai.services.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
 import com.example.letai.exception.exceptionhandler.ResourceNotFoundException;
 import org.springframework.http.ResponseEntity;
@@ -24,7 +27,12 @@ public class PostController {
     public List<PostDTO> getAllPosts() {
         return postServices.findAll();
     }
-
+    @GetMapping(value = "/list-post-pageable")
+    Page<PostDTO> getPostPageable(Pageable pageable) {
+        //Pageable là một interface được sử dụng để đại diện cho thông tin về phân trang (paging) trong các truy vấn dữ liệu.
+//        bao gồm số trang, kích thước trang (số lượng phần tử trên mỗi trang), và các tiêu chí sắp xếp (sorting)
+        return postServices.findAll(pageable);
+    }
     @PostMapping("/post")
     public PostDTO createPost(@RequestBody PostDTO post) {
         return postServices.save(post);
@@ -39,7 +47,6 @@ public class PostController {
     public PostDTO updatePost(@PathVariable(value = "id") Long postId, @RequestBody PostDTO postDetails) {
         return postServices.updatePost(postId,postDetails);
     }
-
     @DeleteMapping("/post/{id}")
     public ResponseEntity<?> deletePost(@PathVariable(value = "id") Long commentId) {
         postServices.deletePostById(commentId);

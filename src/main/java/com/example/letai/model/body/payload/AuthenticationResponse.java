@@ -1,4 +1,4 @@
-package com.example.letai.model.payload;
+package com.example.letai.model.body.payload;
 
 public class AuthenticationResponse {
 

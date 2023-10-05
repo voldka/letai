@@ -2,12 +2,17 @@ package com.example.letai.model.dto;
 
 
 import com.example.letai.model.entity.enums.AppUserRole;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
+import javax.persistence.EntityListeners;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 
 @Data
+@EntityListeners(AuditingEntityListener.class)
+//@JsonIgnoreProperties(value = { "createdAt", "updatedAt" }, allowGetters = true)
 public class UserDTO {
 
     private Long id;
@@ -16,7 +21,7 @@ public class UserDTO {
     private String email;
     @NotBlank(message = "Password is mandatory")
     private String password;
-    @NotBlank(message = "FullName is mandatory")
+//    @NotBlank(message = "FullName is mandatory")
     private String fullName;
 
     private String address;
@@ -28,7 +33,7 @@ public class UserDTO {
     private String city;
 
     private Boolean locked = false;
-    private Boolean enabled = false;
+    private Boolean enabled = true;
 
 
 

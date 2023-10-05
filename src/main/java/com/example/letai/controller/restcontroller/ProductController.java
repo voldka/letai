@@ -21,6 +21,5 @@ public class ProductController {
         //Pageable là một interface được sử dụng để đại diện cho thông tin về phân trang (paging) trong các truy vấn dữ liệu.
 //        bao gồm số trang, kích thước trang (số lượng phần tử trên mỗi trang), và các tiêu chí sắp xếp (sorting)
         return productService.findAll(pageable);
-
     }
 }

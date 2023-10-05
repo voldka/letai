@@ -1,4 +1,4 @@
-package com.example.letai.authenticate.jwt;
+package com.example.letai.config.authenticate.jwt;
 
 import io.jsonwebtoken.*;
 import org.springframework.beans.factory.annotation.Value;
@@ -32,7 +32,7 @@ public class JwtUtil {
 		this.refreshExpirationDateInMs = refreshExpirationDateInMs;
 	}
 
-	public String generateToken(UserDetails userDetails) {
+	public String generateAccessToken(UserDetails userDetails) {
 		Map<String, Object> claims = new HashMap<>();
 
 		Collection<? extends GrantedAuthority> roles = userDetails.getAuthorities();
@@ -44,17 +44,32 @@ public class JwtUtil {
 			claims.put("isUser", true);
 		}
 		
-		return doGenerateToken(claims, userDetails.getUsername());
+		return doGenerateAccessToken(claims, userDetails.getUsername());
 	}
 
-	private String doGenerateToken(Map<String, Object> claims, String subject) {
-		return Jwts.builder().setClaims(claims).setSubject(subject).setIssuedAt(new Date(System.currentTimeMillis()))
+	public String doGenerateAccessToken(Map<String, Object> claims, String subject) {
+		return Jwts.builder().setClaims(claims)
+				.setSubject(subject)
+				.setIssuedAt(new Date(System.currentTimeMillis()))
 				.setExpiration(new Date(System.currentTimeMillis() + jwtExpirationInMs))
 				.signWith(SignatureAlgorithm.HS512, secret).compact();
 
 	}
-	
-	public String doGenerateRefreshToken(Map<String, Object> claims, String subject) {
+	public String generateRefreshToken(UserDetails userDetails) {
+		Map<String, Object> claims = new HashMap<>();
+
+		Collection<? extends GrantedAuthority> roles = userDetails.getAuthorities();
+
+		if (roles.contains(new SimpleGrantedAuthority("ROLE_ADMIN"))) {
+			claims.put("isAdmin", true);
+		}
+		if (roles.contains(new SimpleGrantedAuthority("ROLE_USER"))) {
+			claims.put("isUser", true);
+		}
+
+		return doGenerateRefreshToken(claims, userDetails.getUsername());
+	}
+	public String doGenerateRefreshToken(Map<String, Object> claims, String subject)  {
 
 		return Jwts.builder().setClaims(claims).setSubject(subject)
 				.setIssuedAt(new Date(System.currentTimeMillis()))

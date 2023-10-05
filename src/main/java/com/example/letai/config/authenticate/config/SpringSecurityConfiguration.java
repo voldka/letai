@@ -1,8 +1,8 @@
-package com.example.letai.authenticate.config;
+package com.example.letai.config.authenticate.config;
 
-import com.example.letai.authenticate.config.user.CustomUserDetailsService;
-import com.example.letai.authenticate.jwt.CustomJwtAuthenticationFilter;
-import com.example.letai.authenticate.jwt.JwtAuthenticationEntryPoint;
+import com.example.letai.config.authenticate.config.user.CustomUserDetailsService;
+import com.example.letai.config.authenticate.jwt.CustomJwtAuthenticationFilter;
+import com.example.letai.config.authenticate.jwt.JwtAuthenticationEntryPoint;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -53,6 +53,7 @@ public class SpringSecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .authorizeRequests().antMatchers("/helloadmin", "/admin/*").hasRole("ADMIN")
                 .antMatchers("/hellouser").hasAnyRole("USER", "ADMIN")
                 .antMatchers("/authenticate", "/register", "/api/*", "/*").permitAll()
+                .antMatchers("/refreshtoken").authenticated()
                 .anyRequest().permitAll()
                 .and()
                 .formLogin().loginPage("/admin/login").loginProcessingUrl("/do-login").defaultSuccessUrl("/admin/home").permitAll()

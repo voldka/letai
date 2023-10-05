@@ -11,6 +11,7 @@ import com.example.letai.model.entity.UserEntity;
 import com.example.letai.repository.PostRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -43,6 +44,13 @@ public class PostService {
         }
         return list;
     }
+    public Page<PostDTO> findAll(Pageable pageable) {
+        Page<PostEntity> rs = postRepository.findAll(pageable);
+        Page<PostDTO> dtos = rs.map(productEntity -> {
+            return postConverter.toDto(productEntity);
+        });
+        return dtos;
+    }
     public PostDTO findById(Long id){
         PostEntity rs = postRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Comment", "id", id));;
@@ -56,9 +64,9 @@ public class PostService {
         post.setComment(postDetails.getComment());
         post.setImg(postDetails.getImg());
 
-        PostEntity updatedComment = postRepository.save(post);
+        PostEntity updatedpost = postRepository.save(post);
 
-        PostDTO rs = postConverter.toDto(updatedComment);
+        PostDTO rs = postConverter.toDto(updatedpost);
         return rs;
     }
     public void deletePostById(Long commentId){

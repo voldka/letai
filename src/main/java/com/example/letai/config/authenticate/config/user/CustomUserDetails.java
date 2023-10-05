@@ -1,4 +1,4 @@
-package com.example.letai.authenticate.config.user;
+package com.example.letai.config.authenticate.config.user;
 
 import com.example.letai.model.entity.UserEntity;
 import lombok.Data;

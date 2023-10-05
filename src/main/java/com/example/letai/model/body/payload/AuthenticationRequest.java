@@ -1,4 +1,4 @@
-package com.example.letai.model.payload;
+package com.example.letai.model.body.payload;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;

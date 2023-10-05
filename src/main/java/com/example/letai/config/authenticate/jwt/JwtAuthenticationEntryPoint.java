@@ -1,4 +1,4 @@
-package com.example.letai.authenticate.jwt;
+package com.example.letai.config.authenticate.jwt;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.http.MediaType;

@@ -1,75 +1,58 @@
-package com.example.letai.services;
+package com.example.letai.config.authenticate.config.user;
 
-
-import bsh.util.JConsole;
-import com.example.letai.exception.exceptionhandler.UserNotFoundException;
 import com.example.letai.model.body.user.UpdateUserBody;
 import com.example.letai.model.dto.UserDTO;
 import com.example.letai.model.dto.converter.UserConverter;
-import com.example.letai.model.entity.PasswordResetToken;
+import com.example.letai.model.entity.ProductEntity;
 import com.example.letai.model.entity.UserEntity;
-import com.example.letai.repository.PasswordTokenRepository;
+import com.example.letai.model.entity.enums.AppUserRole;
 import com.example.letai.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 
 @Service
-public class UserService  {
-    @Autowired
-    private UserConverter userConverter;
+public class CustomUserDetailsService implements UserDetailsService {
+
 
     @Autowired
     private UserRepository userRepository;
+
     @Autowired
-    private PasswordEncoder passwordEncoder;
+    private PasswordEncoder bcryptEncoder;
+
     @Autowired
-    private PasswordTokenRepository passwordTokenRepository;
+    private UserConverter userConverter;
 
-    public UserDTO findByEmail(String email){
-        UserDTO rs;
-        Optional<UserEntity> user= userRepository.findByEmail(email);
-        if(user.isPresent()){
-            return userConverter.toDto(user.get());
-        }else return null;
-    }
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        List<SimpleGrantedAuthority> roles = null;
 
-    public List<UserDTO> listAll(){
-        List<UserDTO> list =new ArrayList<>();
-        Iterable<UserEntity> iterable = userRepository.findAll();
-        for (UserEntity item : iterable) {
-            list.add(userConverter.toDto(item));
+
+        Optional<UserEntity> user = userRepository.findByEmail(username);
+        if (user.isPresent()) {
+            roles = Arrays.asList(new SimpleGrantedAuthority(user.get().getRole().toString()));
+            return new User(user.get().getEmail(), user.get().getPassword(), roles);
         }
-        return list;
+        throw new UsernameNotFoundException("User not found with the name " + username);
     }
 
-    public UserDTO get(Long id) throws UserNotFoundException {
-        Optional<UserEntity> result = userRepository.findById(id);
-        if (result.isPresent()) {
-            UserDTO user = userConverter.toDto(result.get());
-            return user;
+    public UserDTO save(UserDTO user) throws Exception {
+        user.setPassword(bcryptEncoder.encode(user.getPassword()));
+        Optional<UserEntity> newUser = userRepository.findByEmail(user.getEmail());
+        if(newUser.isPresent()){
+            throw new Exception();
+        }else{
+            UserEntity userEntity = userConverter.toEntity(user);
+            return userConverter.toDto(userRepository.save(userEntity));
         }
-        throw new UserNotFoundException("Could not find any users with ID " + id);
-    }
-    public void delete(Long id) throws UserNotFoundException {
-        Long count = userRepository.countById(id);
-        if (count == null || count == 0) {
-            throw new UserNotFoundException("Could not find any users with ID " + id);
-        }
-        userRepository.deleteById(id);
-    }
-    public UserDTO save(UserDTO user) {
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
-        UserEntity newUser = new UserEntity();
-        newUser = userConverter.toEntity(user);
-        return userConverter.toDto(userRepository.save(newUser));
     }
 
     public UserDTO updateUser(UpdateUserBody updateUserBody, Long userId) {
@@ -126,3 +109,4 @@ public class UserService  {
         }
     }
 }
+
