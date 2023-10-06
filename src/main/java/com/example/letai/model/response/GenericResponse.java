@@ -1,7 +1,12 @@
 package com.example.letai.model.response;
 
-import java.util.Locale;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
+import java.util.Locale;
+@Data
+@NoArgsConstructor
 public class GenericResponse {
     private String message;
     private String error;

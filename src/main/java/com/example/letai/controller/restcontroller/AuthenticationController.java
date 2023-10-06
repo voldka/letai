@@ -1,28 +1,24 @@
 package com.example.letai.controller.restcontroller;
 
 
-import com.example.letai.config.authenticate.config.user.CustomUserDetailsService;
+import com.example.letai.config.authenticate.config.user.UserService;
 import com.example.letai.config.authenticate.jwt.JwtUtil;
-import com.example.letai.exception.exceptionhandler.UserNotFoundException;
+import com.example.letai.model.body.user.PasswordBody;
 import com.example.letai.model.body.user.UpdateUserBody;
 import com.example.letai.model.dto.UserDTO;
 import com.example.letai.model.body.payload.AuthenticationRequest;
 import com.example.letai.model.body.payload.AuthenticationResponse;
 import com.example.letai.model.entity.RefreshToken;
-import com.example.letai.model.entity.UserEntity;
 import com.example.letai.model.response.GenericResponse;
 import com.example.letai.repository.RefreshTokenRepository;
-import com.example.letai.services.EmailServiceImpl;
-import com.example.letai.services.UserService;
-import io.jsonwebtoken.impl.DefaultClaims;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.DisabledException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
@@ -32,8 +28,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Map.Entry;
-import java.util.UUID;
 
 @RestController
 @RequestMapping(value = "/api")
@@ -43,7 +37,7 @@ public class AuthenticationController {
     private AuthenticationManager authenticationManager;
 
     @Autowired
-    private CustomUserDetailsService userDetailsService;
+    private UserService userDetailsService;
     @Autowired
     private UserService userService;
     @Autowired
@@ -81,7 +75,7 @@ public class AuthenticationController {
     @RequestMapping(value = "/sign-up", method = RequestMethod.POST)
     public ResponseEntity<?> createUser(@RequestBody UserDTO user) throws Exception {
 
-        return ResponseEntity.ok(userDetailsService.save(user));
+        return ResponseEntity.ok(userService.save(user));
     }
 
     @PutMapping(value = "/update-user/{userId}")
@@ -91,12 +85,12 @@ public class AuthenticationController {
                 throw new IllegalArgumentException("userId parameter is missing");
             }
             Long id = Long.valueOf(userId);
-            UserDTO user = userDetailsService.updateUser(updateUserBody,id);
+            UserDTO user = userService.updateUser(updateUserBody, id);
 
             Map<String, Object> response = new HashMap<>();
             response.put("status", "success");
             response.put("message", "User updated successfully");
-            response.put("user",user);
+            response.put("user", user);
 
             return ResponseEntity.ok(response);
         } catch (NumberFormatException e) {
@@ -107,5 +101,36 @@ public class AuthenticationController {
         }
     }
 
+    @PostMapping("/resetPassword")
+    public ResponseEntity resetPassword(HttpServletRequest request,
+                                        @RequestParam("email") String userEmail) {
+        try {
+            if (userService.forgotPassword(userEmail)) {
+                GenericResponse response = new GenericResponse("send email complete", "OK");
+                return ResponseEntity.ok().body(response);
+            } else {
+                GenericResponse response = new GenericResponse("send email failure", "ERR");
+                return ResponseEntity.badRequest().body(response);
+            }
+        } catch (Exception e) {
+            System.out.println(e);
+            GenericResponse response = new GenericResponse("send email failure", "ERR");
+            return ResponseEntity.badRequest().body(response);
+        }
+    }
 
+//remember change url in customJwtAuthen to get token
+    @PostMapping("/newPassword")
+    public ResponseEntity newPassword(@RequestBody PasswordBody newPassword,HttpServletRequest request){
+        try {
+            Authentication object = SecurityContextHolder.getContext().getAuthentication();
+            String email = object.getName();
+            String token = (String) request.getAttribute("token");
+            GenericResponse genericResponse = userService.resetpassword(email,newPassword.getPassword(),token);
+            return ResponseEntity.ok().body(genericResponse);
+        }catch (Exception e){
+            return ResponseEntity.ok().body(new GenericResponse("internal system err at newPassword","ERR"));
+        }
+
+    }
 }

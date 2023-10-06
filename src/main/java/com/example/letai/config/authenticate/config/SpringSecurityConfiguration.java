@@ -1,6 +1,6 @@
 package com.example.letai.config.authenticate.config;
 
-import com.example.letai.config.authenticate.config.user.CustomUserDetailsService;
+import com.example.letai.config.authenticate.config.user.UserService;
 import com.example.letai.config.authenticate.jwt.CustomJwtAuthenticationFilter;
 import com.example.letai.config.authenticate.jwt.JwtAuthenticationEntryPoint;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +21,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 public class SpringSecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Autowired
-    private CustomUserDetailsService userDetailsService;
+    private UserService userDetailsService;
 
     @Autowired
     private CustomJwtAuthenticationFilter customJwtAuthenticationFilter;

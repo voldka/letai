@@ -19,6 +19,8 @@ import java.util.Properties;
 @SpringBootApplication
 //bật tính năng ghi nhận thời gian (timestamp) tự động trong các thực thể (entities)
 @EnableJpaAuditing
+//tự động cấu hình các bean
+//@EnableAutoConfiguration
 public class LetaiApplication {
 
 	public static void main(String[] args) {

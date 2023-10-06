@@ -1,7 +1,7 @@
 package com.example.letai.controller.mvccontroller.web.user;
 
+import com.example.letai.config.authenticate.config.user.UserService;
 import com.example.letai.model.dto.UserDTO;
-import com.example.letai.services.UserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;

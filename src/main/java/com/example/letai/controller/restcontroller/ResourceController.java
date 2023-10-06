@@ -1,17 +1,13 @@
 package com.example.letai.controller.restcontroller;
 
-import com.example.letai.config.authenticate.config.user.CustomUserDetailsService;
 import com.example.letai.config.authenticate.jwt.JwtUtil;
 import com.example.letai.model.body.payload.AuthenticationResponse;
 import com.example.letai.model.entity.RefreshToken;
 import com.example.letai.model.response.GenericResponse;
 import com.example.letai.repository.RefreshTokenRepository;
-import com.example.letai.services.UserService;
 import io.jsonwebtoken.impl.DefaultClaims;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;

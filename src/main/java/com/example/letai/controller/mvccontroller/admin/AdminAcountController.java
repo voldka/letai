@@ -1,9 +1,9 @@
 package com.example.letai.controller.mvccontroller.admin;
 
+import com.example.letai.config.authenticate.config.user.UserService;
 import com.example.letai.exception.exceptionhandler.UserNotFoundException;
 import com.example.letai.model.dto.UserDTO;
 import com.example.letai.model.entity.enums.AppUserRole;
-import com.example.letai.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

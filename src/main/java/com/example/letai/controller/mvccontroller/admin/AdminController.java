@@ -1,9 +1,9 @@
 package com.example.letai.controller.mvccontroller.admin;
 
 
+import com.example.letai.config.authenticate.config.user.UserService;
 import com.example.letai.model.dto.PostDTO;
 import com.example.letai.services.PostService;
-import com.example.letai.services.UserService;
 import com.example.letai.util.FileUploadUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
