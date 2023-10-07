@@ -53,6 +53,7 @@ public class UserService implements UserDetailsService {
         }
         throw new UsernameNotFoundException("User not found with the name " + username);
     }
+
     public UserDTO findByEmail(String email) {
         UserDTO rs;
         Optional<UserEntity> user = userRepository.findByEmail(email);
@@ -178,8 +179,8 @@ public class UserService implements UserDetailsService {
             if (passwordResetToken != null) {
                 //change password
                 String oldPassword = findByEmail(email).getPassword();
-                GenericResponse genericResponse =changePassword(email, newPassword, oldPassword);
-                if(genericResponse.getError().equals("OK")){
+                GenericResponse genericResponse = updatePassword(email, newPassword, oldPassword);
+                if (genericResponse.getError().equals("OK")) {
                     passwordTokenRepository.delete(passwordResetToken);
                 }
                 return genericResponse;
@@ -193,7 +194,7 @@ public class UserService implements UserDetailsService {
 
     }
 
-    public GenericResponse changePassword(String email, String newPassword, String oldPassword) {
+    public GenericResponse updatePassword(String email, String newPassword, String oldPassword) {
         try {
             UserDTO user = findByEmail(email);
             if (user != null) {
@@ -212,5 +213,23 @@ public class UserService implements UserDetailsService {
         }
     }
 
+    public GenericResponse changePassword(String email, String newPassword, String oldPassword) {
+        try {
+            UserDTO user = findByEmail(email);
+            if (user != null) {
+                if (bcryptEncoder.matches(oldPassword, user.getPassword())) {
+                    user.setPassword(bcryptEncoder.encode(newPassword));
+                    save(user);
+                    return new GenericResponse("change password complete", "OK");
+                } else {
+                    return new GenericResponse("pass not match", "ERR");
+                }
+            } else {
+                return new GenericResponse("user not found", "ERR");
+            }
+        } catch (Exception e) {
+            return new GenericResponse("internal server err at changePassword in userService", "ERR");
+        }
+    }
 }
 

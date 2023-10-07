@@ -3,6 +3,7 @@ package com.example.letai.controller.restcontroller;
 
 import com.example.letai.config.authenticate.config.user.UserService;
 import com.example.letai.config.authenticate.jwt.JwtUtil;
+import com.example.letai.model.body.user.ChangePasswordBody;
 import com.example.letai.model.body.user.PasswordBody;
 import com.example.letai.model.body.user.UpdateUserBody;
 import com.example.letai.model.dto.UserDTO;
@@ -119,18 +120,30 @@ public class AuthenticationController {
         }
     }
 
-//remember change url in customJwtAuthen to get token
+    //remember change url in customJwtAuthen to get token
     @PostMapping("/newPassword")
-    public ResponseEntity newPassword(@RequestBody PasswordBody newPassword,HttpServletRequest request){
+    public ResponseEntity newPassword(@RequestBody PasswordBody newPassword, HttpServletRequest request) {
         try {
             Authentication object = SecurityContextHolder.getContext().getAuthentication();
             String email = object.getName();
             String token = (String) request.getAttribute("token");
-            GenericResponse genericResponse = userService.resetpassword(email,newPassword.getPassword(),token);
+            GenericResponse genericResponse = userService.resetpassword(email, newPassword.getPassword(), token);
             return ResponseEntity.ok().body(genericResponse);
-        }catch (Exception e){
-            return ResponseEntity.ok().body(new GenericResponse("internal system err at newPassword","ERR"));
+        } catch (Exception e) {
+            return ResponseEntity.ok().body(new GenericResponse("internal system err at newPassword", "ERR"));
         }
 
+    }
+
+    @PostMapping("/changePassword")
+    public ResponseEntity changePasword(@RequestBody ChangePasswordBody changePasswordBody) {
+        try {
+            GenericResponse genericResponse = userService.changePassword(changePasswordBody.getEmail(),
+                    changePasswordBody.getNewPassword(), changePasswordBody.getOldPassword());
+            return ResponseEntity.ok().body(genericResponse);
+
+        } catch (Exception e) {
+            return ResponseEntity.ok().body(new GenericResponse("internal system err at newPassword", "ERR"));
+        }
     }
 }

@@ -1,4 +1,4 @@
-package com.example.letai;
+package com.example.letai.repository;
 
 
 
